@@ -2,31 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public class Movement : MonoBehaviour
 {
     [SerializeField] private float _speed;
 
-    private Animator _animator;
-    private int _run = Animator.StringToHash("Run");
-    
-    private void Start()
+    private FootAnimation _animation;
+
+    private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        _animation = GetComponent<FootAnimation>();
     }
 
     private void Update()
     {
+        Move();
+    }
+
+    private void Move()
+    {
         if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(_speed * Time.deltaTime, 0, 0);
-            _animator.SetTrigger(_run);
+            _animation.AnimationWalking();
         }
 
         if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(_speed * Time.deltaTime * -1, 0, 0);
-            _animator.SetTrigger(_run);
+            _animation.AnimationWalking();
         }
 
         if (Input.GetKey(KeyCode.W))
